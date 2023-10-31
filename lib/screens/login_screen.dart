@@ -23,7 +23,7 @@ bool isPassword =true;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: false,
+      // resizeToAvoidBottomInset: false,
       body: SingleChildScrollView(
         child: SizedBox(
           // height: MediaQuery.of(context).size.height,
