@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:smithackathon/constants/colors.dart';
-import 'package:smithackathon/screens/navbar/bottomnavigation.dart';
 import 'package:smithackathon/widgets/buttonwidget.dart';
 import 'package:smithackathon/widgets/textwidget.dart';
 
@@ -172,7 +171,7 @@ class _DoctorDetailsScreenState extends State<DoctorDetailsScreen> {
           ),
         ),
 
-        bottomNavigationBar: const CustomBottomNavigationBar(pageindex: 3),
+        //  bottomNavigationBar: const CustomBottomNavigationBar(pageindex: ),
       ),
     );
   }
