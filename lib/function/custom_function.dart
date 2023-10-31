@@ -315,10 +315,9 @@ Future<List<DocumentSnapshot>> getFavoriteDoctors() async {
      String userUID = FirebaseAuth.instance.currentUser!.uid;
   await FirebaseFirestore.instance
       .collection('users') // Replace with the actual collection name where user data is stored
-      .doc(userUID) // Replace with the user's unique identifier
-      .update({
-    'favoriteDoctors': FieldValue.arrayRemove([doctorId])
-  });
+      .doc(userUID).collection("favorites").doc(doctorId) // Specify the doctor you want to remove
+      .delete();
+      
 }
 
   
