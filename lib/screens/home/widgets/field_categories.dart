@@ -318,7 +318,7 @@ class _FieldsCategoriesState extends State<FieldsCategories> {
                                     borderRadius: BorderRadius.circular(10)),
                                 height: 60,
                                 width: 60,
-                                child: Image.asset(Myimages.psychatristIcon),
+                                child: Image.asset(Myimages.orthomologistIcon),
                               ),
                             ),
                             const Text(
@@ -348,7 +348,7 @@ class _FieldsCategoriesState extends State<FieldsCategories> {
                                     borderRadius: BorderRadius.circular(10)),
                                 height: 60,
                                 width: 60,
-                                child: Image.asset(Myimages.gyneIcon),
+                                child: Image.asset(Myimages.pediatrictaionIcon),
                               ),
                             ),
                             const Text(

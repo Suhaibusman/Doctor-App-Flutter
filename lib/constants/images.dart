@@ -10,7 +10,7 @@ class Myimages {
   static const String dentistIcon = "assets/images/dentist.png";
   static const String orthopedicIcon = "assets/images/orthopedic.png";
     static const String pediatrictaionIcon = "assets/images/pediatrician.png";
-  static const String psychatristIcon = "assets/images/pediatrician.png";
+  static const String psychatristIcon = "assets/images/pyschiatrist.png";
   static const String orthomologistIcon = "assets/images/ortholomogist.png";
   static const String gyneIcon = "assets/images/obstrecian- gyne cologist.png";
   static const String neurologistIcon = "assets/images/neurologist.png";
