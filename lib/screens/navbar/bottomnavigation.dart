@@ -4,6 +4,7 @@ import 'package:smithackathon/constants/colors.dart';
 import 'package:smithackathon/data.dart';
 import 'package:smithackathon/screens/cat%20screen/cat_screen.dart';
 import 'package:smithackathon/screens/favourite%20screen/favourite_screen.dart';
+import 'package:smithackathon/screens/home/appointments/appointment_screen.dart';
 import 'package:smithackathon/screens/home/home_screen.dart';
 
 
@@ -24,6 +25,7 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
     const Icon(Icons.home, size: 30),
     const Icon(Icons.category, size: 30),
     const Icon(Icons.favorite, size: 30),
+    const Icon(Icons.more_vert, size: 30),
   ];
 
 
@@ -61,10 +63,10 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
          await    Navigator.push(context, MaterialPageRoute(builder: (context) => const FavouriteScreen(),));
              setState(() {});
         } 
-        // else  if (pageindex ==3) {
-        //   await   Navigator.push(context, MaterialPageRoute(builder: (context) =>  DoctorDetails( profileimages: ),));
-        //     setState(() {});
-        // } 
+        else  if (pageindex ==3) {
+          await   Navigator.push(context, MaterialPageRoute(builder: (context) =>  AppointmentScreen() ,));
+            setState(() {});
+        } 
        
       },
     );

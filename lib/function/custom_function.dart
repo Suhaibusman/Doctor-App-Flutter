@@ -209,17 +209,21 @@ void fixappointment(String doctorName, context) async {
 
       String userEmail = userData["emailAddress"];
       String username = userData["username"];
-
+      await FirebaseFirestore.instance.collection("users").doc(userUID).collection("appointments").doc(doctorName).set({
+        "DoctorName": doctorName,
+        "userName": username,
+        "userEmailAddress": userEmail,
+        "appointmentDate": DateTime.now(),
+      });
       // Set the appointment details
       await doctorCollection.doc(userUID).set({
         "userId": userUID,
         "userName": username,
         "userEmailAddress": userEmail,
         "appointmentDate": DateTime.now(),
-        // other appointment details
       });
 
-      customDialogBox(context, "Appointment Fixed", "$username, your appointment is fixed with $doctorName");
+      customDialogBox(context, "Appointment Fixed", "$username, Your Appointment is fixed with $doctorName");
     } else {
       customDialogBox(context, "User Details Not Found", "Your user details are not found.");
     }
