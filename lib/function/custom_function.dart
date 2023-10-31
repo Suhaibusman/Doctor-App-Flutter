@@ -2155,7 +2155,7 @@ class CustomFunction {
                       ),
                       child: Column(
                         children: [
-                          Text(doc["DoctorName"])
+                          Text("Your Appointment is fixed with ${doc["DoctorName"]} on ${doc["appointmentDate"]}")
                         ],
                       ),
                     ));

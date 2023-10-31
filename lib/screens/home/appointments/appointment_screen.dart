@@ -27,7 +27,7 @@ class _AppointmentScreenState extends State<AppointmentScreen> {
                       Navigator.pop(context);
                     }, icon: const Icon(Icons.arrow_back)),
                     SizedBox(width: MediaQuery.of(context).size.width*0.2,),
-                    const Center(child: Text("All Doctor" ,style: TextStyle(fontSize: 18),))
+                    const Center(child: Text("Appointments Details" ,style: TextStyle(fontSize: 18),))
                   ],
                 ),
             FutureBuilder<Widget>(
@@ -37,7 +37,7 @@ class _AppointmentScreenState extends State<AppointmentScreen> {
                     if (snapshot.hasData) {
                       return snapshot.data!;
                     } else {
-                      return const Center(child: Text("No Data Found"));
+                      return const Center(child: Text("No Fixed Appointment"));
                     }
                   } else {
                     return const Center(child: CircularProgressIndicator());
