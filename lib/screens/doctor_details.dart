@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:smithackathon/constants/colors.dart';
+import 'package:smithackathon/function/custom_function.dart';
 import 'package:smithackathon/widgets/buttonwidget.dart';
 import 'package:smithackathon/widgets/textwidget.dart';
 
@@ -16,7 +17,17 @@ class DoctorDetailsScreen extends StatefulWidget {
 }
 
 class _DoctorDetailsScreenState extends State<DoctorDetailsScreen> {
+   CustomFunction func = CustomFunction();
     final FirebaseFirestore firestore = FirebaseFirestore.instance;
+    String doctorName= "";
+   
+
+
+      @override
+        void initState() {
+    super.initState();
+    doctorName = widget.username;
+  }
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -157,9 +168,9 @@ class _DoctorDetailsScreenState extends State<DoctorDetailsScreen> {
                 const SizedBox(height: 20,),
                 InkWell(
                   onTap: (){
-                         firestore.collection(widget.username).add({"Datetime": DateTime.now(), 
-                         });
-                  },
+                        
+                         func.fixappointment(doctorName,context);
+                                  },
                   child: const CustomButtonWidget(bgColor: MyColors.purpleColor, textMessage: "FixAppointment", textColor: MyColors.whiteColor, textSize: 15, buttonWidth: 200))
                  , const Row(
                     mainAxisAlignment: MainAxisAlignment.start,

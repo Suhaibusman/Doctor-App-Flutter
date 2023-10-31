@@ -171,6 +171,49 @@ class CustomFunction {
     }
     return [];
   }
+  void fetchUserDetails() async {
+  String userUID = FirebaseAuth.instance.currentUser!.uid;
+  DocumentSnapshot userSnapshot = await FirebaseFirestore.instance.collection("users").doc(userUID).get();
+  
+  if (userSnapshot.exists) {
+    Map<String, dynamic> userData = userSnapshot.data() as Map<String, dynamic>;
+
+    String userEmail = userData["emailAddress"];
+    String username = userData["username"];
+
+    
+    print("User Email: $userEmail");
+    print("Username: $username");
+
+    // You can update the UI to display these details in your drawer or any other widget.
+  }
+}
+
+void fixappointment(String doctorName,context) async {
+  String userUID = FirebaseAuth.instance.currentUser!.uid;
+  
+  // Fetch user details from the "users" collection
+  DocumentSnapshot userSnapshot = await FirebaseFirestore.instance.collection("users").doc(userUID).get();
+
+  if (userSnapshot.exists) {
+    Map<String, dynamic> userData = userSnapshot.data() as Map<String, dynamic>;
+
+    String userEmail = userData["emailAddress"];
+    String username = userData["username"];
+    FirebaseFirestore.instance.collection(doctorName).add({
+      "userId": userUID,
+      "userName": username,
+      "userEmailAddress": userEmail,  
+      "appointmentDate": DateTime.now(),
+      // other appointment details
+    });
+    customDialogBox(context, "Appointment Fixed", "$username your Appointment is fixed with $doctorName");
+  } else {
+        customDialogBox(context, "Appointment Fixed", "Your Appointment is Already fixed with $doctorName");
+        // Handle the case where user details are not found
+  }
+}
+
 
   Future<Widget> fetchWholeData(
     setState,
