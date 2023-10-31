@@ -133,13 +133,42 @@ class CustomFunction {
       log(doc.toString());
     }
   }
+void addToFavorites(DocumentSnapshot doctor) {
+  // Get the currently logged-in user's UID
+  String userUID = FirebaseAuth.instance.currentUser!.uid;
+
+
+  CollectionReference userFavorites = firestore.collection("users").doc(userUID).collection("favorites");
+  
+  userFavorites.where("doctorId", isEqualTo: doctor.id).get().then((QuerySnapshot querySnapshot) {
+    if (querySnapshot.size == 0) {
+      // Doctor is not in favorites, add them
+      userFavorites.add({
+        "doctorId": doctor.id,
+        "username": doctor["username"],
+        "speciality": doctor["speciality"],
+        "profileimages": doctor["picture"],
+      });
+    }
+  });
+}
+Future<List<DocumentSnapshot>> getFavoriteDoctors() async {
+  String userUID = FirebaseAuth.instance.currentUser!.uid;
+  CollectionReference userFavorites = firestore.collection("users").doc(userUID).collection("favorites");
+  QuerySnapshot favoriteDoctorsSnapshot = await userFavorites.get();
+  
+  if (favoriteDoctorsSnapshot.docs.isNotEmpty) {
+    return favoriteDoctorsSnapshot.docs;
+  }
+  return [];
+}
+
+
 
   Future<Widget> fetchWholeData(
     setState,
     profilePic,
   ) async {
-// ...
-
     return StreamBuilder<QuerySnapshot>(
       stream: firestore.collection("doctor").snapshots(),
       builder: (context, snapshot) {
@@ -255,11 +284,11 @@ class CustomFunction {
                                                 .withOpacity(0.3),
                                             borderRadius:
                                                 BorderRadius.circular(10)),
-                                        child: const Center(
-                                          child: Icon(
-                                            Icons.favorite,
-                                            color: MyColors.pinkColor,
-                                          ),
+                                        child:  Center(
+                                          child:IconButton(onPressed: (){
+                                                addToFavorites(doc);
+                                          }, icon: const Icon(Icons.favorite,
+                                            color: MyColors.pinkColor,))
                                         )),
                                   ],
                                 )
