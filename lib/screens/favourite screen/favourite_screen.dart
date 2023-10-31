@@ -134,7 +134,7 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
                                                 BorderRadius.circular(10)),
                                         child:  Center(
                                           child:IconButton(onPressed: (){
-                                                // addToFavorites(doc);
+                                              func.removeFromFavorites(doc.id); 
                                           }, icon: const Icon(Icons.favorite,
                                             color: MyColors.pinkColor,))
                                         )),

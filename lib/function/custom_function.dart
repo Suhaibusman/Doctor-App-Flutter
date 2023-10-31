@@ -310,6 +310,17 @@ Future<List<DocumentSnapshot>> getFavoriteDoctors() async {
       },
     );
   }
+  //remove from favourite
+  Future<void> removeFromFavorites(String doctorId) async {
+     String userUID = FirebaseAuth.instance.currentUser!.uid;
+  await FirebaseFirestore.instance
+      .collection('users') // Replace with the actual collection name where user data is stored
+      .doc(userUID) // Replace with the user's unique identifier
+      .update({
+    'favoriteDoctors': FieldValue.arrayRemove([doctorId])
+  });
+}
+
   
   //for fetching specific data
   fecthSpecificData() async {
