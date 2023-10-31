@@ -189,31 +189,42 @@ class CustomFunction {
   }
 }
 
-void fixappointment(String doctorName,context) async {
+void fixappointment(String doctorName, context) async {
   String userUID = FirebaseAuth.instance.currentUser!.uid;
-  
-  // Fetch user details from the "users" collection
-  DocumentSnapshot userSnapshot = await FirebaseFirestore.instance.collection("users").doc(userUID).get();
 
-  if (userSnapshot.exists) {
-    Map<String, dynamic> userData = userSnapshot.data() as Map<String, dynamic>;
+  // Reference to the doctor's collection
+  CollectionReference doctorCollection = FirebaseFirestore.instance.collection(doctorName);
 
-    String userEmail = userData["emailAddress"];
-    String username = userData["username"];
-    FirebaseFirestore.instance.collection(doctorName).add({
-      "userId": userUID,
-      "userName": username,
-      "userEmailAddress": userEmail,  
-      "appointmentDate": DateTime.now(),
-      // other appointment details
-    });
-    customDialogBox(context, "Appointment Fixed", "$username your Appointment is fixed with $doctorName");
+  // Check if there's an appointment with the current user's UID
+  DocumentSnapshot userAppointment = await doctorCollection.doc(userUID).get();
+
+  if (userAppointment.exists) {
+    customDialogBox(context, "Already Fixed", "Your appointment is already fixed with $doctorName");
   } else {
-        customDialogBox(context, "Appointment Fixed", "Your Appointment is Already fixed with $doctorName");
-        // Handle the case where user details are not found
+    // Fetch user details from the "users" collection
+    DocumentSnapshot userSnapshot = await FirebaseFirestore.instance.collection("users").doc(userUID).get();
+
+    if (userSnapshot.exists) {
+      Map<String, dynamic> userData = userSnapshot.data() as Map<String, dynamic>;
+
+      String userEmail = userData["emailAddress"];
+      String username = userData["username"];
+
+      // Set the appointment details
+      await doctorCollection.doc(userUID).set({
+        "userId": userUID,
+        "userName": username,
+        "userEmailAddress": userEmail,
+        "appointmentDate": DateTime.now(),
+        // other appointment details
+      });
+
+      customDialogBox(context, "Appointment Fixed", "$username, your appointment is fixed with $doctorName");
+    } else {
+      customDialogBox(context, "User Details Not Found", "Your user details are not found.");
+    }
   }
 }
-
 
   Future<Widget> fetchWholeData(
     setState,
