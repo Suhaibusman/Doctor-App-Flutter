@@ -1,7 +1,9 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:smithackathon/constants/colors.dart';
 import 'package:smithackathon/data.dart';
-import 'package:smithackathon/screens/favourite/favourite_screen.dart';
+import 'package:smithackathon/screens/cat%20screen/cat_screen.dart';
+import 'package:smithackathon/screens/favourite%20screen/favourite_screen.dart';
 import 'package:smithackathon/screens/home/home_screen.dart';
 
 
@@ -22,7 +24,6 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
     const Icon(Icons.home, size: 30),
     const Icon(Icons.category, size: 30),
     const Icon(Icons.favorite, size: 30),
-    const Icon(Icons.more_vert, size: 30),
   ];
 
 
@@ -38,7 +39,8 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
     return CurvedNavigationBar(
       key: bottomNavigationKey,
       backgroundColor: const Color(0xffF8F7FB),
-      buttonBackgroundColor: Colors.amber,
+      buttonBackgroundColor: MyColors.purpleColor,
+
       animationCurve: Curves.easeInOut,
       animationDuration: const Duration(milliseconds: 300),
       items: items,
@@ -52,15 +54,15 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
        await   Navigator.push(context, MaterialPageRoute(builder: (context) =>  HomeScreen(loginedUsername: currentname ?? "back"),));
        setState(() {});
         } else  if (pageindex ==1) {
-         await    Navigator.push(context, MaterialPageRoute(builder: (context) => const FavouriteScreen(),));
+         await    Navigator.push(context, MaterialPageRoute(builder: (context) => const CatScreen(),));
             setState(() {});
         } 
-        // else  if (pageindex ==2) {
-        //  await    Navigator.push(context, MaterialPageRoute(builder: (context) => const FavouriteScreenData(),));
-        //      setState(() {});
-        // } 
+        else  if (pageindex ==2) {
+         await    Navigator.push(context, MaterialPageRoute(builder: (context) => const FavouriteScreen(),));
+             setState(() {});
+        } 
         // else  if (pageindex ==3) {
-        //   await   Navigator.push(context, MaterialPageRoute(builder: (context) => const CartScreenData(),));
+        //   await   Navigator.push(context, MaterialPageRoute(builder: (context) =>  DoctorDetails( profileimages: ),));
         //     setState(() {});
         // } 
        

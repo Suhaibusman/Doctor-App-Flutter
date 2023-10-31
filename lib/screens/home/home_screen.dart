@@ -11,7 +11,6 @@ import 'package:smithackathon/constants/colors.dart';
 import 'package:smithackathon/constants/images.dart';
 import 'package:smithackathon/function/custom_function.dart';
 import 'package:smithackathon/provider/theme/theme_provider.dart';
-import 'package:smithackathon/screens/categories/all_doctors.dart';
 import 'package:smithackathon/screens/home/widgets/all_doctors.dart';
 import 'package:smithackathon/screens/home/widgets/field_categories.dart';
 

@@ -1,21 +1,22 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:smithackathon/constants/colors.dart';
+import 'package:smithackathon/screens/navbar/bottomnavigation.dart';
 import 'package:smithackathon/widgets/buttonwidget.dart';
 import 'package:smithackathon/widgets/textwidget.dart';
 
-class DoctorDetails extends StatefulWidget {
+class DoctorDetailsScreen extends StatefulWidget {
   final String username;
   final String speciality;
   final String profileimages;
 
-  const DoctorDetails({super.key, required this.username, required this.speciality, required this.profileimages});
+  const DoctorDetailsScreen({super.key, required this.username, required this.speciality, required this.profileimages});
 
   @override
-  State<DoctorDetails> createState() => _DoctorDetailsState();
+  State<DoctorDetailsScreen> createState() => _DoctorDetailsScreenState();
 }
 
-class _DoctorDetailsState extends State<DoctorDetails> {
+class _DoctorDetailsScreenState extends State<DoctorDetailsScreen> {
     final FirebaseFirestore firestore = FirebaseFirestore.instance;
   @override
   Widget build(BuildContext context) {
@@ -171,7 +172,7 @@ class _DoctorDetailsState extends State<DoctorDetails> {
           ),
         ),
 
-
+        bottomNavigationBar: const CustomBottomNavigationBar(pageindex: 3),
       ),
     );
   }

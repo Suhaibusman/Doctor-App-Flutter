@@ -162,7 +162,7 @@ class CustomFunction {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => DoctorDetails(
+                              builder: (context) => DoctorDetailsScreen(
                                   username: doc["username"],
                                   speciality: doc["speciality"],
                                   profileimages: doc["picture"]),
@@ -522,7 +522,7 @@ class CustomFunction {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => DoctorDetails(
+                              builder: (context) => DoctorDetailsScreen(
                                   username: doc["username"],
                                   speciality: doc["speciality"],
                                   profileimages: doc["picture"]),
@@ -672,7 +672,7 @@ class CustomFunction {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => DoctorDetails(
+                              builder: (context) => DoctorDetailsScreen(
                                   username: doc["username"],
                                   speciality: doc["speciality"],
                                   profileimages: doc["picture"]),
@@ -820,7 +820,7 @@ class CustomFunction {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => DoctorDetails(
+                              builder: (context) => DoctorDetailsScreen(
                                   username: doc["username"],
                                   speciality: doc["speciality"],
                                   profileimages: doc["picture"]),
@@ -968,7 +968,7 @@ class CustomFunction {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => DoctorDetails(
+                              builder: (context) => DoctorDetailsScreen(
                                   username: doc["username"],
                                   speciality: doc["speciality"],
                                   profileimages: doc["picture"]),
@@ -1116,7 +1116,7 @@ Future<Widget> fetchPsychiatrististData(
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => DoctorDetails(
+                              builder: (context) => DoctorDetailsScreen(
                                   username: doc["username"],
                                   speciality: doc["speciality"],
                                   profileimages: doc["picture"]),
@@ -1264,7 +1264,7 @@ Future<Widget> fetchGynecologistData(
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => DoctorDetails(
+                              builder: (context) => DoctorDetailsScreen(
                                   username: doc["username"],
                                   speciality: doc["speciality"],
                                   profileimages: doc["picture"]),
@@ -1412,7 +1412,7 @@ Future<Widget> fetchOptholomoogistData(
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => DoctorDetails(
+                              builder: (context) => DoctorDetailsScreen(
                                   username: doc["username"],
                                   speciality: doc["speciality"],
                                   profileimages: doc["picture"]),
@@ -1560,7 +1560,7 @@ Future<Widget> fetchPediatrcianData(
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => DoctorDetails(
+                              builder: (context) => DoctorDetailsScreen(
                                   username: doc["username"],
                                   speciality: doc["speciality"],
                                   profileimages: doc["picture"]),
@@ -1708,7 +1708,7 @@ Future<Widget> fetchGastrologistData(
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => DoctorDetails(
+                              builder: (context) => DoctorDetailsScreen(
                                   username: doc["username"],
                                   speciality: doc["speciality"],
                                   profileimages: doc["picture"]),
@@ -1856,7 +1856,7 @@ Future<Widget> fetchDermatologistData(
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => DoctorDetails(
+                              builder: (context) => DoctorDetailsScreen(
                                   username: doc["username"],
                                   speciality: doc["speciality"],
                                   profileimages: doc["picture"]),
