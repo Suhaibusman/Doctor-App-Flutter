@@ -26,9 +26,13 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
     } else if (snapshot.hasError) {
       return Text('Error: ${snapshot.error}');
     } else if (snapshot.hasData) {
+     
       List<DocumentSnapshot<Object?>>? favoriteDoctors = snapshot.data;
+ if (favoriteDoctors!.isEmpty) {
+              return const Center(child: TextWidget(textMessage: "No Favourite Doctor Found", textColor: MyColors.blackColor, textSize: 20));
+            }
       return ListView.builder(
-        itemCount: favoriteDoctors!.length,
+        itemCount: favoriteDoctors.length,
         itemBuilder: (context, index) {
           DocumentSnapshot doc = favoriteDoctors[index];
           // Build the UI for displaying favorite doctors
@@ -137,7 +141,7 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
                                               func.removeFromFavorites(doc.id); 
                                               setState(() {});
                                           }, icon: const Icon(Icons.favorite,
-                                            color: MyColors.pinkColor,))
+                                            color: Colors.red,))
                                         )),
                                   ],
                                 )
