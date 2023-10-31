@@ -171,64 +171,80 @@ class CustomFunction {
     }
     return [];
   }
+
   void fetchUserDetails() async {
-  String userUID = FirebaseAuth.instance.currentUser!.uid;
-  DocumentSnapshot userSnapshot = await FirebaseFirestore.instance.collection("users").doc(userUID).get();
-  
-  if (userSnapshot.exists) {
-    Map<String, dynamic> userData = userSnapshot.data() as Map<String, dynamic>;
-
-    String userEmail = userData["emailAddress"];
-    String username = userData["username"];
-
-    
-    print("User Email: $userEmail");
-    print("Username: $username");
-
-    // You can update the UI to display these details in your drawer or any other widget.
-  }
-}
-
-void fixappointment(String doctorName, context) async {
-  String userUID = FirebaseAuth.instance.currentUser!.uid;
-
-  // Reference to the doctor's collection
-  CollectionReference doctorCollection = FirebaseFirestore.instance.collection(doctorName);
-
-  // Check if there's an appointment with the current user's UID
-  DocumentSnapshot userAppointment = await doctorCollection.doc(userUID).get();
-
-  if (userAppointment.exists) {
-    customDialogBox(context, "Already Fixed", "Your appointment is already fixed with $doctorName");
-  } else {
-    // Fetch user details from the "users" collection
-    DocumentSnapshot userSnapshot = await FirebaseFirestore.instance.collection("users").doc(userUID).get();
+    String userUID = FirebaseAuth.instance.currentUser!.uid;
+    DocumentSnapshot userSnapshot =
+        await FirebaseFirestore.instance.collection("users").doc(userUID).get();
 
     if (userSnapshot.exists) {
-      Map<String, dynamic> userData = userSnapshot.data() as Map<String, dynamic>;
+      Map<String, dynamic> userData =
+          userSnapshot.data() as Map<String, dynamic>;
 
       String userEmail = userData["emailAddress"];
       String username = userData["username"];
-      await FirebaseFirestore.instance.collection("users").doc(userUID).collection("appointments").doc(doctorName).set({
-        "DoctorName": doctorName,
-        "userName": username,
-        "userEmailAddress": userEmail,
-        "appointmentDate": DateTime.now(),
-      });
-      // Set the appointment details
-      await doctorCollection.doc(userUID).set({
-        "userId": userUID,
-        "userName": username,
-        "userEmailAddress": userEmail,
-        "appointmentDate": DateTime.now(),
-      });
 
-      customDialogBox(context, "Appointment Fixed", "$username, Your Appointment is fixed with $doctorName");
-    } else {
-      customDialogBox(context, "User Details Not Found", "Your user details are not found.");
+      print("User Email: $userEmail");
+      print("Username: $username");
+
+      // You can update the UI to display these details in your drawer or any other widget.
     }
   }
-}
+
+  void fixappointment(String doctorName, context) async {
+    String userUID = FirebaseAuth.instance.currentUser!.uid;
+
+    // Reference to the doctor's collection
+    CollectionReference doctorCollection =
+        FirebaseFirestore.instance.collection(doctorName);
+
+    // Check if there's an appointment with the current user's UID
+    DocumentSnapshot userAppointment =
+        await doctorCollection.doc(userUID).get();
+
+    if (userAppointment.exists) {
+      customDialogBox(context, "Already Fixed",
+          "Your appointment is already fixed with $doctorName");
+    } else {
+      // Fetch user details from the "users" collection
+      DocumentSnapshot userSnapshot = await FirebaseFirestore.instance
+          .collection("users")
+          .doc(userUID)
+          .get();
+
+      if (userSnapshot.exists) {
+        Map<String, dynamic> userData =
+            userSnapshot.data() as Map<String, dynamic>;
+
+        String userEmail = userData["emailAddress"];
+        String username = userData["username"];
+        await FirebaseFirestore.instance
+            .collection("users")
+            .doc(userUID)
+            .collection("appointments")
+            .doc(doctorName)
+            .set({
+          "DoctorName": doctorName,
+          "userName": username,
+          "userEmailAddress": userEmail,
+          "appointmentDate": DateTime.now(),
+        });
+        // Set the appointment details
+        await doctorCollection.doc(userUID).set({
+          "userId": userUID,
+          "userName": username,
+          "userEmailAddress": userEmail,
+          "appointmentDate": DateTime.now(),
+        });
+
+        customDialogBox(context, "Appointment Fixed",
+            "$username, Your Appointment is fixed with $doctorName");
+      } else {
+        customDialogBox(context, "User Details Not Found",
+            "Your user details are not found.");
+      }
+    }
+  }
 
   Future<Widget> fetchWholeData(
     setState,
@@ -398,7 +414,6 @@ void fixappointment(String doctorName, context) async {
 
   //for fetching specific data
   fecthSpecificData() async {
-    //agr specific document pr run krenge to document snapshot me aayega sirf ek user ka data aayega
     DocumentSnapshot snapshot =
         await firestore.collection("users").doc("05NHGEjt1Jklkbd1Yl4h").get();
 
@@ -2109,5 +2124,50 @@ void fixappointment(String doctorName, context) async {
         .get();
 
     return userFavorites.exists;
+  }
+
+  Future<Widget> fetchAppointmentData(
+  ) async {
+    String userUID = FirebaseAuth.instance.currentUser!.uid;
+    return StreamBuilder<QuerySnapshot>(
+      stream: firestore
+          .collection("users")
+          .doc(userUID)
+          .collection("appointments")
+          .snapshots(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.active) {
+          if (snapshot.hasData && snapshot.data != null) {
+            return Expanded(
+              child: ListView.separated(
+                separatorBuilder: (context, index) => const SizedBox(
+                  height: 10,
+                ),
+                itemCount: snapshot.data!.docs.length,
+                itemBuilder: (context, index) {
+                  DocumentSnapshot doc = snapshot.data!.docs[index];
+
+                  return Padding(
+                    padding: const EdgeInsets.only(left: 10, right: 10),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20)
+                      ),
+                      child: Column(
+                        children: [
+                          Text(doc["DoctorName"])
+                        ],
+                      ),
+                    ));
+                },
+              ),
+            );
+          } else {
+            return const Center(child: Text("No Data Found"));
+          }
+        }
+        return const Center(child: CircularProgressIndicator());
+      },
+    );
   }
 }
