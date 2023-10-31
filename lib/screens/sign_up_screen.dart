@@ -18,6 +18,7 @@ import 'package:smithackathon/widgets/textwidget.dart';
 // ... (imports and constants)
 
 class SignUpScreen extends StatefulWidget {
+  // ignore: use_key_in_widget_constructors
   const SignUpScreen({Key? key});
 
   @override

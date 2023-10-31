@@ -106,7 +106,10 @@ class CustomFunction {
           Navigator.pushReplacement(
               context,
               MaterialPageRoute(
-                builder: (context) => HomeScreen(uid: credential.user!.uid, loginedUsername: currentname ?? "back",),
+                builder: (context) => HomeScreen(
+                  uid: credential.user!.uid,
+                  loginedUsername: currentname ?? "back",
+                ),
               ));
         }
       } on FirebaseAuthException catch (e) {
@@ -133,37 +136,41 @@ class CustomFunction {
       log(doc.toString());
     }
   }
-void addToFavorites(DocumentSnapshot doctor) {
-  // Get the currently logged-in user's UID
-  String userUID = FirebaseAuth.instance.currentUser!.uid;
 
+  void addToFavorites(DocumentSnapshot doctor) {
+    // Get the currently logged-in user's UID
+    String userUID = FirebaseAuth.instance.currentUser!.uid;
 
-  CollectionReference userFavorites = firestore.collection("users").doc(userUID).collection("favorites");
-  
-  userFavorites.where("doctorId", isEqualTo: doctor.id).get().then((QuerySnapshot querySnapshot) {
-    if (querySnapshot.size == 0) {
-      // Doctor is not in favorites, add them
-      userFavorites.add({
-        "doctorId": doctor.id,
-        "username": doctor["username"],
-        "speciality": doctor["speciality"],
-        "profileimages": doctor["picture"],
-      });
-    }
-  });
-}
-Future<List<DocumentSnapshot>> getFavoriteDoctors() async {
-  String userUID = FirebaseAuth.instance.currentUser!.uid;
-  CollectionReference userFavorites = firestore.collection("users").doc(userUID).collection("favorites");
-  QuerySnapshot favoriteDoctorsSnapshot = await userFavorites.get();
-  
-  if (favoriteDoctorsSnapshot.docs.isNotEmpty) {
-    return favoriteDoctorsSnapshot.docs;
+    CollectionReference userFavorites =
+        firestore.collection("users").doc(userUID).collection("favorites");
+
+    userFavorites
+        .where("doctorId", isEqualTo: doctor.id)
+        .get()
+        .then((QuerySnapshot querySnapshot) {
+      if (querySnapshot.size == 0) {
+        // Doctor is not in favorites, add them
+        userFavorites.add({
+          "doctorId": doctor.id,
+          "username": doctor["username"],
+          "speciality": doctor["speciality"],
+          "profileimages": doctor["picture"],
+        });
+      }
+    });
   }
-  return [];
-}
 
+  Future<List<DocumentSnapshot>> getFavoriteDoctors() async {
+    String userUID = FirebaseAuth.instance.currentUser!.uid;
+    CollectionReference userFavorites =
+        firestore.collection("users").doc(userUID).collection("favorites");
+    QuerySnapshot favoriteDoctorsSnapshot = await userFavorites.get();
 
+    if (favoriteDoctorsSnapshot.docs.isNotEmpty) {
+      return favoriteDoctorsSnapshot.docs;
+    }
+    return [];
+  }
 
   Future<Widget> fetchWholeData(
     setState,
@@ -284,12 +291,20 @@ Future<List<DocumentSnapshot>> getFavoriteDoctors() async {
                                                 .withOpacity(0.3),
                                             borderRadius:
                                                 BorderRadius.circular(10)),
-                                        child:  Center(
-                                          child:IconButton(onPressed: (){
-                                                addToFavorites(doc);
-                                          }, icon: const Icon(Icons.favorite,
-                                            color: MyColors.pinkColor,))
-                                        )),
+                                        child: Center(
+                                            child: IconButton(
+                                                onPressed: () async {
+                                                  if (await isFavorite(doc)) {
+                                                    removeFromFavorites(doc.id);
+                                                  } else {
+                                                    addToFavorites(doc);
+                                                  }
+                                                  setState(() {});
+                                                },
+                                                icon: const Icon(
+                                                  Icons.favorite,
+                                                  color: MyColors.pinkColor,
+                                                )))),
                                   ],
                                 )
                               ],
@@ -310,17 +325,19 @@ Future<List<DocumentSnapshot>> getFavoriteDoctors() async {
       },
     );
   }
+
   //remove from favourite
   Future<void> removeFromFavorites(String doctorId) async {
-     String userUID = FirebaseAuth.instance.currentUser!.uid;
-  await FirebaseFirestore.instance
-      .collection('users') // Replace with the actual collection name where user data is stored
-      .doc(userUID).collection("favorites").doc(doctorId) // Specify the doctor you want to remove
-      .delete();
-      
-}
+    String userUID = FirebaseAuth.instance.currentUser!.uid;
+    await FirebaseFirestore.instance
+        .collection(
+            'users') // Replace with the actual collection name where user data is stored
+        .doc(userUID)
+        .collection("favorites")
+        .doc(doctorId) // Specify the doctor you want to remove
+        .delete();
+  }
 
-  
   //for fetching specific data
   fecthSpecificData() async {
     //agr specific document pr run krenge to document snapshot me aayega sirf ek user ka data aayega
@@ -329,24 +346,23 @@ Future<List<DocumentSnapshot>> getFavoriteDoctors() async {
 
     log(snapshot.toString());
   }
+
   fetchUserName() async {
-  DocumentSnapshot snapshot = await firestore.collection("users").doc(currentloginedUsername).get();
-  
-  if (snapshot.exists) {
-    
-    Map<String, dynamic>? userData = snapshot.data() as Map<String, dynamic>?;
+    DocumentSnapshot snapshot =
+        await firestore.collection("users").doc(currentloginedUsername).get();
 
-    if (userData != null) {
-       currentname = userData["username"];
-      
+    if (snapshot.exists) {
+      Map<String, dynamic>? userData = snapshot.data() as Map<String, dynamic>?;
+
+      if (userData != null) {
+        currentname = userData["username"];
+      } else {
+        print("User data is null.");
+      }
     } else {
-      print("User data is null.");
+      print("User document does not exist.");
     }
-  } else {
-    print("User document does not exist.");
   }
-}
-
 
   addUsertoFireBase(context) {
     showDialog(
@@ -680,6 +696,7 @@ Future<List<DocumentSnapshot>> getFavoriteDoctors() async {
       },
     );
   }
+
   Future<Widget> fetchOrthoPedicData(
     setState,
     profilePic,
@@ -830,6 +847,7 @@ Future<List<DocumentSnapshot>> getFavoriteDoctors() async {
       },
     );
   }
+
   Future<Widget> fetchDentistData(
     setState,
     profilePic,
@@ -978,7 +996,8 @@ Future<List<DocumentSnapshot>> getFavoriteDoctors() async {
       },
     );
   }
- Future<Widget> fetchNeuroLogistData(
+
+  Future<Widget> fetchNeuroLogistData(
     setState,
     profilePic,
   ) async {
@@ -1126,7 +1145,8 @@ Future<List<DocumentSnapshot>> getFavoriteDoctors() async {
       },
     );
   }
-Future<Widget> fetchPsychiatrististData(
+
+  Future<Widget> fetchPsychiatrististData(
     setState,
     profilePic,
   ) async {
@@ -1274,7 +1294,8 @@ Future<Widget> fetchPsychiatrististData(
       },
     );
   }
-Future<Widget> fetchGynecologistData(
+
+  Future<Widget> fetchGynecologistData(
     setState,
     profilePic,
   ) async {
@@ -1422,7 +1443,8 @@ Future<Widget> fetchGynecologistData(
       },
     );
   }
-Future<Widget> fetchOptholomoogistData(
+
+  Future<Widget> fetchOptholomoogistData(
     setState,
     profilePic,
   ) async {
@@ -1570,7 +1592,8 @@ Future<Widget> fetchOptholomoogistData(
       },
     );
   }
-Future<Widget> fetchPediatrcianData(
+
+  Future<Widget> fetchPediatrcianData(
     setState,
     profilePic,
   ) async {
@@ -1718,7 +1741,8 @@ Future<Widget> fetchPediatrcianData(
       },
     );
   }
-Future<Widget> fetchGastrologistData(
+
+  Future<Widget> fetchGastrologistData(
     setState,
     profilePic,
   ) async {
@@ -1866,7 +1890,8 @@ Future<Widget> fetchGastrologistData(
       },
     );
   }
-Future<Widget> fetchDermatologistData(
+
+  Future<Widget> fetchDermatologistData(
     setState,
     profilePic,
   ) async {
@@ -2015,4 +2040,16 @@ Future<Widget> fetchDermatologistData(
     );
   }
 
+  Future<bool> isFavorite(DocumentSnapshot doctor) async {
+    String userUID = FirebaseAuth.instance.currentUser!.uid;
+
+    final userFavorites = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(userUID)
+        .collection('favorites')
+        .doc(doctor.id) // Use the doctor's document ID as the reference
+        .get();
+
+    return userFavorites.exists;
+  }
 }
