@@ -3,38 +3,51 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:smithackathon/function/custom_function.dart';
 
-class AllDoctors extends StatefulWidget {
-  const AllDoctors({super.key});
+class AllDoctorScreen extends StatefulWidget {
+  const AllDoctorScreen({super.key});
 
   @override
-  State<AllDoctors> createState() => _AllDoctorsState();
+  State<AllDoctorScreen> createState() => _AllDoctorScreenState();
 }
 
-class _AllDoctorsState extends State<AllDoctors> {
+class _AllDoctorScreenState extends State<AllDoctorScreen> {
   
   CustomFunction func = CustomFunction();
     File? profilePic;
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body:  Column(
-        children: [
-          FutureBuilder<Widget>(
-              future: func.fetchWholeData(setState, profilePic,),
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.done) {
-                  if (snapshot.hasData) {
-                    return snapshot.data!;
+    return SafeArea(
+      child: Scaffold(
+        body:  Column(
+    
+          children: [
+            Row(
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    IconButton(onPressed: (){
+                      Navigator.pop(context);
+                    }, icon: const Icon(Icons.arrow_back)),
+                    SizedBox(width: MediaQuery.of(context).size.width*0.2,),
+                    const Center(child: Text("All Doctor" ,style: TextStyle(fontSize: 18),))
+                  ],
+                ),
+            FutureBuilder<Widget>(
+                future: func.fetchWholeData(setState, profilePic,),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.done) {
+                    if (snapshot.hasData) {
+                      return snapshot.data!;
+                    } else {
+                      return const Center(child: Text("No Data Found"));
+                    }
                   } else {
-                    return const Center(child: Text("No Data Found"));
+                    return const Center(child: CircularProgressIndicator());
                   }
-                } else {
-                  return const Center(child: CircularProgressIndicator());
-                }
-              },
-            ) ,
-        ],
-      )
+                },
+              ) ,
+          ],
+        )
+      ),
     );
   }
 }

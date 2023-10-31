@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 
 import 'package:smithackathon/firebase_options.dart';
 import 'package:smithackathon/provider/theme/theme_provider.dart';
-import 'package:smithackathon/screens/home_screen.dart';
+import 'package:smithackathon/screens/home/home_screen.dart';
 import 'package:smithackathon/screens/login_screen.dart';
 
 void main() async {

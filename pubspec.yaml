@@ -44,6 +44,8 @@ dependencies:
   firebase_storage: ^11.4.0
   uuid: ^4.1.0
   badges: ^3.1.2
+  dot_navigation_bar: ^1.0.2
+  curved_navigation_bar: ^1.0.3
 
 dev_dependencies:
   flutter_test:

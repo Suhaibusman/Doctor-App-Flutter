@@ -10,7 +10,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:smithackathon/constants/colors.dart';
 import 'package:smithackathon/data.dart';
 import 'package:smithackathon/screens/doctor_details.dart';
-import 'package:smithackathon/screens/home_screen.dart';
+import 'package:smithackathon/screens/home/home_screen.dart';
 import 'package:smithackathon/screens/login_screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:smithackathon/widgets/buttonwidget.dart';
@@ -294,7 +294,7 @@ class CustomFunction {
   DocumentSnapshot snapshot = await firestore.collection("users").doc(currentloginedUsername).get();
   
   if (snapshot.exists) {
-    // Access and store the user's data in variables
+    
     Map<String, dynamic>? userData = snapshot.data() as Map<String, dynamic>?;
 
     if (userData != null) {
