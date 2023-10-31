@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "714025929028",
+    "project_id": "smit-devathon",
+    "storage_bucket": "smit-devathon.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:714025929028:android:e095c1256f1f9c8c30af11",
+        "android_client_info": {
+          "package_name": "com.example.smithackathon"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBX8NEdQrUHu62MCRjwpUrd3EVW1fILqJc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
