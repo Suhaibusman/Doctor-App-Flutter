@@ -1,3 +1,6 @@
-String? currentloginedUsername;
-String? signupDoctorUid;
-String? currentname;
+late String currentloginedName;
+late String currentloginedEmail;
+late String currentloginedUid;
+String? currentLogineedUserPicture;
+
+

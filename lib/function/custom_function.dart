@@ -23,6 +23,7 @@ class CustomFunction {
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
   TextEditingController passController = TextEditingController();
   TextEditingController emailController = TextEditingController();
+  
   Future customDialogBox(
     context,
     String title,
@@ -101,7 +102,7 @@ class CustomFunction {
       email: emailAddress, password: password);
   emailController.clear();
   passwordController.clear();
-  
+  currentloginedUid = credential.user!.uid;
   final userUid = credential.user!.uid;
   
   // Check if the user exists in the "doctor" collection
@@ -112,10 +113,7 @@ class CustomFunction {
     String doctorEmail = doctorData["emailAddress"];
     String doctorName = doctorData["username"];
     String doctorPicture = doctorData["picture"];
-    print("User Email (Doctor): $doctorEmail");
-    print("Username (Doctor): $doctorName");
-    print("Pictur (Doctor): $doctorPicture");
-    
+  
     // Navigate to DoctorScreen
     Navigator.pushReplacement(
       context,
@@ -125,17 +123,18 @@ class CustomFunction {
     );
   } else {
     // Check if the user exists in the "user" collection
-    DocumentSnapshot userSnapshot = await firestore.collection("user").doc(userUid).get();
+    DocumentSnapshot userSnapshot = await firestore.collection("users").doc(userUid).get();
     if (userSnapshot.exists) {
-      // User is a regular user
+      // User is a regular 
       Map<String, dynamic> userData = userSnapshot.data() as Map<String, dynamic>;
-      String userName = userData["username"];
-      
+     currentloginedName = userData["username"];
+     currentloginedEmail =userData["emailAddress"];
+      currentLogineedUserPicture =userData["picture"];
       // Navigate to HomeScreen
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
-          builder: (context) => HomeScreen(uid: userUid, loginedUsername: userName),
+          builder: (context) => HomeScreen(userName: currentloginedName, emailAdress: currentloginedEmail, profilePicture: currentLogineedUserPicture),
         ),
       );
     } else {
@@ -493,13 +492,13 @@ class CustomFunction {
 
   fetchUserName() async {
     DocumentSnapshot snapshot =
-        await firestore.collection("users").doc(currentloginedUsername).get();
+        await firestore.collection("users").doc(currentloginedUid).get();
 
     if (snapshot.exists) {
       Map<String, dynamic>? userData = snapshot.data() as Map<String, dynamic>?;
 
       if (userData != null) {
-        currentname = userData["username"];
+        currentloginedName = userData["username"];
       } else {
         print("User data is null.");
       }
@@ -647,7 +646,7 @@ class CustomFunction {
           password: password,
         );
 
-        signupDoctorUid = credential.user!.uid;
+        currentloginedUid = credential.user!.uid;
         UploadTask uploadimage = FirebaseStorage.instance
             .ref()
             .child("profilepictures")
@@ -671,6 +670,7 @@ class CustomFunction {
           passwordController.clear();
           userNameController.clear();
           selectedDoctorField = "Select Value";
+          profilePic = null;
         }
       } on FirebaseAuthException catch (e) {
         if (e.code == 'weak-password') {

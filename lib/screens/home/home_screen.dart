@@ -3,28 +3,33 @@
 
 import 'dart:io';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
 import 'package:smithackathon/constants/colors.dart';
 import 'package:smithackathon/constants/images.dart';
+import 'package:smithackathon/data.dart';
 import 'package:smithackathon/function/custom_function.dart';
 import 'package:smithackathon/provider/theme/theme_provider.dart';
 import 'package:smithackathon/screens/home/widgets/all_doctors.dart';
 import 'package:smithackathon/screens/home/widgets/field_categories.dart';
-
 import 'package:smithackathon/screens/navbar/bottomnavigation.dart';
 import 'package:smithackathon/widgets/textwidget.dart';
 
 // ignore: must_be_immutable
 class HomeScreen extends StatefulWidget {
-  String? uid;
-  String loginedUsername;
+
+  String? userName;
+  String? emailAdress;
+  String? profilePicture;
   HomeScreen({
     Key? key,
-    this.uid,
-    required this.loginedUsername,
+    this.profilePicture,
+    this.userName,
+     this.emailAdress,
   }) : super(key: key);
 
   @override
@@ -51,16 +56,63 @@ class _HomeScreenState extends State<HomeScreen> {
                  decoration: const BoxDecoration(
           color: MyColors.purpleColor, // Set the background color to purple
         ),
-              accountName: const Text('Muhammad Suhaib Usman'),
-              accountEmail: const Text('Suhaibusman54@gmail.com'),
-              currentAccountPicture:  CircleAvatar(
+              accountName: Text(widget.userName ??""),
+              accountEmail:Text(widget.emailAdress ??""),
+              currentAccountPicture: widget.profilePicture != null ? CircleAvatar(
   radius: 50,
   backgroundColor: Colors.transparent, // Set the background color to transparent
   child: ClipOval(
-    child: Image.asset(Myimages.mypic),
+    
+    child: Image.network(widget.profilePicture ?? "https://www.freepnglogos.com/uploads/camera-logo-png/camera-icon-download-17.png",
+     width: 80,  // Adjust the width and height as needed
+    height: 80,
+    fit: BoxFit.cover,),
   ),
+
+
 )
-            ),
+     :InkWell(
+                          onTap: () async {
+                            XFile? selectedImage = await ImagePicker()
+                                .pickImage(source: ImageSource.gallery);
+                            print("Image Selected");
+                    
+                            if (selectedImage != null) {
+                              File convertedFile = File(selectedImage.path);
+                           UploadTask uploadimage = FirebaseStorage.instance
+            .ref()
+            .child("profilepictures")
+            .child(currentloginedUid)
+            .putFile(profilePic!);
+
+        TaskSnapshot taskSnapshot = await uploadimage;
+        String downloadurl = await taskSnapshot.ref.getDownloadURL();
+        await FirebaseFirestore.instance.collection("doctor").doc(currentloginedUid).set({
+          "picture": downloadurl
+        });
+
+                              //  await FirebaseStorage.instance.ref().child("profilepictures").child(const Uuid().v1()).putFile(profilePic!);
+                              setState(() {
+                                profilePic = convertedFile;
+                              });
+            //                    UploadTask uploadimage = FirebaseStorage.instance
+            // .ref()
+            // .child("profilepictures")
+            // .child(currentloginedUid!)
+            // .putFile(profilePic!);
+                              print("Image Selected!");
+                            } else {
+                              print("No Image Selected!");
+                            }
+                          },
+                          child: CircleAvatar(
+                            radius: 25,
+                            backgroundColor: Colors.grey,
+                            backgroundImage: (profilePic != null)
+                                ? FileImage(profilePic!)
+                                : null,
+                          ),
+                        )       ),
             const ListTile(
               leading: Icon(Icons.phone),
               title: Text('Contact Number'),
@@ -130,36 +182,10 @@ class _HomeScreenState extends State<HomeScreen> {
                               // func.signout(context);
                             },
                             child: Image.asset(Myimages.drawerIcon)),
-                        InkWell(
-                          onTap: () async {
-                            XFile? selectedImage = await ImagePicker()
-                                .pickImage(source: ImageSource.gallery);
-                            print("Image Selected");
-                    
-                            if (selectedImage != null) {
-                              File convertedFile = File(selectedImage.path);
-                    
-                              //  await FirebaseStorage.instance.ref().child("profilepictures").child(const Uuid().v1()).putFile(profilePic!);
-                              setState(() {
-                                profilePic = convertedFile;
-                              });
-                              print("Image Selected!");
-                            } else {
-                              print("No Image Selected!");
-                            }
-                          },
-                          child: CircleAvatar(
-                            radius: 25,
-                            backgroundColor: Colors.grey,
-                            backgroundImage: (profilePic != null)
-                                ? FileImage(profilePic!)
-                                : null,
-                          ),
-                        )
-                      ],
+                       ],
                     ),
                      TextWidget(
-                        textMessage: "Welcome ${widget.loginedUsername}",
+                        textMessage: "Welcome ${widget.userName}",
                         textColor: MyColors.whiteColor,
                         textSize: 15),
                     SizedBox(

@@ -53,7 +53,7 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
           currentindex = pageindex;
         });
         if (pageindex ==0) {
-       await   Navigator.push(context, MaterialPageRoute(builder: (context) =>  HomeScreen(loginedUsername: currentname ?? "back"),));
+       await   Navigator.push(context, MaterialPageRoute(builder: (context) =>  HomeScreen(userName: currentloginedName, emailAdress: currentloginedEmail),));
        setState(() {});
         } else  if (pageindex ==1) {
          await    Navigator.push(context, MaterialPageRoute(builder: (context) => const CatScreen(),));

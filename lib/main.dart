@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:smithackathon/data.dart';
 
 import 'package:smithackathon/firebase_options.dart';
 import 'package:smithackathon/provider/theme/theme_provider.dart';
@@ -29,9 +30,7 @@ class MyApp extends StatelessWidget {
           theme: provider.themeMode,
           debugShowCheckedModeBanner: false,
           home: (FirebaseAuth.instance.currentUser != null)
-              ? HomeScreen(
-                  loginedUsername: "",
-                )
+              ? HomeScreen(userName: currentloginedName)
               : const LoginScreen(),
         );
       },
