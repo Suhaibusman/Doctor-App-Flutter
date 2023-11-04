@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:smithackathon/constants/colors.dart';
 import 'package:smithackathon/data.dart';
+import 'package:smithackathon/screens/DoctorScreen/doctor_home.dart';
 import 'package:smithackathon/screens/doctor_details.dart';
 import 'package:smithackathon/screens/home/home_screen.dart';
 import 'package:smithackathon/screens/login_screen.dart';
@@ -92,30 +93,100 @@ class CustomFunction {
     String password = passwordController.text.toString().trim();
 
     if (emailAddress == "" || password == "") {
-      customDialogBox(context, "Error", "Please Fill All The Values");
-    } else {
-      try {
-        final credential = await FirebaseAuth.instance
-            .signInWithEmailAndPassword(
-                email: emailAddress, password: password);
-        emailController.clear();
-        passwordController.clear();
-        if (credential.user != null) {
-          currentloginedUsername = credential.user!.uid;
-          Navigator.popUntil(context, (route) => route.isFirst);
-          Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(
-                builder: (context) => HomeScreen(
-                  uid: credential.user!.uid,
-                  loginedUsername: currentname ?? "back",
-                ),
-              ));
-        }
-      } on FirebaseAuthException catch (e) {
-        customDialogBox(context, "Error", e.code.toString());
-      }
+      customDialogBox(context, "Error", "Please Enter Username and Password");
     }
+    else{
+      try {
+  final credential = await FirebaseAuth.instance.signInWithEmailAndPassword(
+      email: emailAddress, password: password);
+  emailController.clear();
+  passwordController.clear();
+  
+  final userUid = credential.user!.uid;
+  
+  // Check if the user exists in the "doctor" collection
+  DocumentSnapshot doctorSnapshot = await firestore.collection("doctor").doc(userUid).get();
+  if (doctorSnapshot.exists) {
+    // User is a doctor
+    Map<String, dynamic> doctorData = doctorSnapshot.data() as Map<String, dynamic>;
+    String doctorEmail = doctorData["emailAddress"];
+    String doctorName = doctorData["username"];
+    String doctorPicture = doctorData["picture"];
+    print("User Email (Doctor): $doctorEmail");
+    print("Username (Doctor): $doctorName");
+    print("Pictur (Doctor): $doctorPicture");
+    
+    // Navigate to DoctorScreen
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+        builder: (context) => DoctorScreen(doctorName: doctorName, doctorEmail: doctorEmail, doctorPicture: doctorPicture),
+      ),
+    );
+  } else {
+    // Check if the user exists in the "user" collection
+    DocumentSnapshot userSnapshot = await firestore.collection("user").doc(userUid).get();
+    if (userSnapshot.exists) {
+      // User is a regular user
+      Map<String, dynamic> userData = userSnapshot.data() as Map<String, dynamic>;
+      String userName = userData["username"];
+      
+      // Navigate to HomeScreen
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => HomeScreen(uid: userUid, loginedUsername: userName),
+        ),
+      );
+    } else {
+      // Handle the case where the user is neither a doctor nor a regular user
+    }
+  }
+} catch (e) {
+  customDialogBox(context, "Error", e.toString());
+}
+
+    }
+    //  else {
+    //   try {
+    //     final credential = await FirebaseAuth.instance
+    //         .signInWithEmailAndPassword(
+    //             email: emailAddress, password: password);
+    //     emailController.clear();
+    //     passwordController.clear();
+    //     if (credential.user != null) {
+    //       currentloginedUsername = credential.user!.uid;
+
+    // DocumentSnapshot doctorSnapshot =
+    //     await firestore.collection("doctor").doc(credential.user!.uid).get();
+    //       if (doctorSnapshot.exists) {
+    //   Map<String, dynamic> userData =
+    //       doctorSnapshot.data() as Map<String, dynamic>;
+
+    //   String doctorEmail = userData["emailAddress"];
+    //   String doctorName = userData["username"];
+
+    //   print("User Email: $doctorEmail");
+    //   print("Username: $doctorName");
+
+    //   // You can update the UI to display these details in your drawer or any other widget.
+    // }
+   
+ 
+    //       Navigator.popUntil(context, (route) => route.isFirst);
+    //       Navigator.pushReplacement(
+    //           context,
+    //           MaterialPageRoute(
+    //             builder: (context) => HomeScreen(
+    //               uid: credential.user!.uid,
+    //               loginedUsername: currentname ?? "back",
+    //             ),
+    //           ));
+    //     }
+    //   } on FirebaseAuthException catch (e) {
+    //     customDialogBox(context, "Error", e.code.toString());
+    //   }
+    // }
   }
 
   signout(context) async {

@@ -9,7 +9,7 @@ import 'package:smithackathon/screens/home/home_screen.dart';
 import 'package:smithackathon/screens/login_screen.dart';
 
 void main() async {
-   WidgetsFlutterBinding.ensureInitialized();
+  WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
@@ -21,23 +21,20 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-   
-        return ChangeNotifierProvider(
-          create: (context) => ThemeProvider(),
-          builder: (context, child) {
-            final provider =Provider.of<ThemeProvider>(context);
-            return MaterialApp(
-          
-            theme: provider.themeMode,
-       
-          
-            debugShowCheckedModeBanner: false,
-          home:(FirebaseAuth.instance.currentUser !=null )? HomeScreen(loginedUsername: "",): const LoginScreen(),
-          );
-          },
+    return ChangeNotifierProvider(
+      create: (context) => ThemeProvider(),
+      builder: (context, child) {
+        final provider = Provider.of<ThemeProvider>(context);
+        return MaterialApp(
+          theme: provider.themeMode,
+          debugShowCheckedModeBanner: false,
+          home: (FirebaseAuth.instance.currentUser != null)
+              ? HomeScreen(
+                  loginedUsername: "",
+                )
+              : const LoginScreen(),
         );
-      
-  
-  
+      },
+    );
   }
 }
