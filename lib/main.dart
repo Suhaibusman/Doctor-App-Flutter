@@ -6,6 +6,7 @@ import 'package:get_storage/get_storage.dart';
 
 import 'package:smithackathon/data.dart';
 import 'package:smithackathon/firebase_options.dart';
+import 'package:smithackathon/languages.dart';
 import 'package:smithackathon/screens/home/home_screen.dart';
 import 'package:smithackathon/screens/login_screen.dart';
 import 'package:smithackathon/theme/theme_controller.dart';
@@ -13,6 +14,7 @@ import 'package:smithackathon/theme/theme_controller.dart';
 
 
 void main() async {
+  Get.locale = Locale('en'); 
   WidgetsFlutterBinding.ensureInitialized();
   await GetStorage.init();
   await Firebase.initializeApp(
@@ -29,6 +31,9 @@ class MyApp extends StatelessWidget {
      Get.lazyPut(() => ThemeController());
      ThemeController themeController = Get.find<ThemeController>();
     return GetMaterialApp(
+      locale: const Locale("en","US"),
+      translations: Languages(),
+      fallbackLocale: const Locale("en","US"),
            theme: ThemeData.light(), // Initial theme
       darkTheme: ThemeData.dark(), // Initial dark theme
       themeMode: themeController.isSwitched.isTrue
@@ -36,7 +41,7 @@ class MyApp extends StatelessWidget {
           : ThemeMode.light,
           debugShowCheckedModeBanner: false,
           home: (FirebaseAuth.instance.currentUser != null)
-              ? HomeScreen(userName: box.read("currentloginedName"))
+              ? HomeScreen(userName: currentloginedName)
               : const LoginScreen(),
         );
   }

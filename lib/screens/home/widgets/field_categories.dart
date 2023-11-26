@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:smithackathon/constants/colors.dart';
 import 'package:smithackathon/constants/images.dart';
 import 'package:smithackathon/screens/categories/all_doctors.dart';
@@ -29,8 +30,8 @@ class _FieldsCategoriesState extends State<FieldsCategories> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const TextWidget(
-                      textMessage: "Categories",
+                   TextWidget(
+                      textMessage: "categories".tr,
                       textColor: MyColors.blackColor,
                       textSize: 20),
                   SingleChildScrollView(
@@ -57,9 +58,9 @@ class _FieldsCategoriesState extends State<FieldsCategories> {
                                 child: Image.asset(Myimages.allIcon),
                               ),
                             ),
-                            const Text(
-                              "all",
-                              style: TextStyle(color: MyColors.greyColor),
+                             Text(
+                              "all".tr,
+                              style: const TextStyle(color: MyColors.greyColor),
                             )
                           ],
                         ),
@@ -86,9 +87,9 @@ class _FieldsCategoriesState extends State<FieldsCategories> {
                                 child: Image.asset(Myimages.cardiologyIcon),
                               ),
                             ),
-                            const Text(
-                              "Cardiology",
-                              style: TextStyle(color: MyColors.greyColor),
+                             Text(
+                              "Cardiology".tr,
+                              style: const TextStyle(color: MyColors.greyColor),
                             )
                           ],
                         ),
@@ -115,9 +116,9 @@ class _FieldsCategoriesState extends State<FieldsCategories> {
                                 child: Image.asset(Myimages.dentistIcon),
                               ),
                             ),
-                            const Text(
-                              "Dentist",
-                              style: TextStyle(color: MyColors.greyColor),
+                             Text(
+                              "Dentist".tr,
+                              style: const TextStyle(color: MyColors.greyColor),
                             )
                           ],
                         ),
@@ -145,9 +146,9 @@ class _FieldsCategoriesState extends State<FieldsCategories> {
                                 child: Image.asset(Myimages.orthopedicIcon),
                               ),
                             ),
-                            const Text(
-                              "OrthoPedic",
-                              style: TextStyle(color: MyColors.greyColor),
+                             Text(
+                              "OrthoPedic".tr,
+                              style: const TextStyle(color: MyColors.greyColor),
                             )
                           ],
                         ),
@@ -175,9 +176,9 @@ class _FieldsCategoriesState extends State<FieldsCategories> {
                                 child: Image.asset(Myimages.dermotologistIcon),
                               ),
                             ),
-                            const Text(
-                              "Dermotologist",
-                              style: TextStyle(color: MyColors.greyColor),
+                             Text(
+                              "Dermotologist".tr,
+                              style: const TextStyle(color: MyColors.greyColor),
                             )
                           ],
                         ),
@@ -204,9 +205,9 @@ class _FieldsCategoriesState extends State<FieldsCategories> {
                                 child: Image.asset(Myimages.gastrologistIcon),
                               ),
                             ),
-                            const Text(
-                              "Gastrologist",
-                              style: TextStyle(color: MyColors.greyColor),
+                             Text(
+                              "Gastrologist".tr,
+                              style: const TextStyle(color: MyColors.greyColor),
                             )
                           ],
                         ),
@@ -234,9 +235,9 @@ class _FieldsCategoriesState extends State<FieldsCategories> {
                                 child: Image.asset(Myimages.neurologistIcon),
                               ),
                             ),
-                            const Text(
-                              "Neurologist",
-                              style: TextStyle(color: MyColors.greyColor),
+                             Text(
+                              "Neurologist".tr,
+                              style: const TextStyle(color: MyColors.greyColor),
                             )
                           ],
                         ),
@@ -263,9 +264,9 @@ class _FieldsCategoriesState extends State<FieldsCategories> {
                                 child: Image.asset(Myimages.psychatristIcon),
                               ),
                             ),
-                            const Text(
-                              "Psychiatrist",
-                              style: TextStyle(color: MyColors.greyColor),
+                             Text(
+                              "Psychiatrist".tr,
+                              style: const TextStyle(color: MyColors.greyColor),
                             )
                           ],
                         ),
@@ -293,9 +294,9 @@ class _FieldsCategoriesState extends State<FieldsCategories> {
                                 child: Image.asset(Myimages.gyneIcon),
                               ),
                             ),
-                            const Text(
-                              "Gynecologist",
-                              style: TextStyle(color: MyColors.greyColor),
+                             Text(
+                              "Gynecologist".tr,
+                              style: const TextStyle(color: MyColors.greyColor),
                             )
                           ],
                         ),
@@ -321,9 +322,9 @@ class _FieldsCategoriesState extends State<FieldsCategories> {
                                 child: Image.asset(Myimages.orthomologistIcon),
                               ),
                             ),
-                            const Text(
-                              "Optholomogist",
-                              style: TextStyle(color: MyColors.greyColor),
+                             Text(
+                              "Optholomogist".tr,
+                              style: const TextStyle(color: MyColors.greyColor),
                             )
                           ],
                         ),
@@ -351,9 +352,9 @@ class _FieldsCategoriesState extends State<FieldsCategories> {
                                 child: Image.asset(Myimages.pediatrictaionIcon),
                               ),
                             ),
-                            const Text(
-                              "Peditrician",
-                              style: TextStyle(color: MyColors.greyColor),
+                             Text(
+                              "Peditrician".tr ,
+                              style: const TextStyle(color: MyColors.greyColor),
                             )
                           ],
                         ),

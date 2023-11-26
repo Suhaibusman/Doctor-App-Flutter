@@ -10,9 +10,11 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:smithackathon/constants/colors.dart';
 import 'package:smithackathon/constants/images.dart';
+import 'package:smithackathon/controller/home_controller.dart';
 import 'package:smithackathon/controller/sign_out_controller.dart';
 import 'package:smithackathon/data.dart';
 import 'package:smithackathon/function/custom_function.dart';
+import 'package:smithackathon/languages.dart';
 import 'package:smithackathon/screens/home/widgets/all_doctors.dart';
 import 'package:smithackathon/screens/home/widgets/field_categories.dart';
 import 'package:smithackathon/screens/navbar/bottomnavigation.dart';
@@ -45,8 +47,11 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    Languages lang = Get.put(Languages());
     ThemeController themeController = Get.put(ThemeController());
+    HomeController homeController = Get.put(HomeController());
     SignoutController signoutController = Get.put(SignoutController());
+    
     return SafeArea(
       child: Scaffold(
             key: _scaffoldKey,
@@ -119,13 +124,29 @@ class _HomeScreenState extends State<HomeScreen> {
               title: Text('Contact Number'),
               subtitle: Text('+92311-2136120'),
             ),
+             Padding(
+             padding: const EdgeInsets.only(left :10 ,right :10),
+             child: Row(
+              mainAxisAlignment: 
+              MainAxisAlignment.spaceBetween,
+                        children: [
+                           Text("title".tr , style:  const TextStyle( fontSize: 16 , fontWeight: FontWeight.bold),),
+                           Obx(
+              () => Switch(
+              value: homeController.currentLanguage.value == 'ur_PK',
+              onChanged: (value) => homeController.changeLanguage(),
+            ),
+            ),
+                                ],
+                      ), ),
+            
            Padding(
              padding: const EdgeInsets.only(left :10 ,right :10),
              child: Row(
               mainAxisAlignment: 
               MainAxisAlignment.spaceBetween,
                         children: [
-                          const Text("Dark Theme" , style:  TextStyle( fontSize: 16 , fontWeight: FontWeight.bold),),
+                           Text("Theme".tr , style:  const TextStyle( fontSize: 16 , fontWeight: FontWeight.bold),),
                            Obx(
               () => Switch(
                   value: themeController.isSwitched.value,
@@ -185,20 +206,20 @@ class _HomeScreenState extends State<HomeScreen> {
                        ],
                     ),
                      TextWidget(
-                        textMessage: "Welcome ${widget.userName}",
+                        textMessage: "welcome".tr + " ${widget.userName}",
                         textColor: MyColors.whiteColor,
                         textSize: 15),
                     SizedBox(
                         width: MediaQuery.of(context).size.width * 0.7,
-                        child: const TextWidget(
-                            textMessage: "Lets find your Top Doctor",
+                        child:  TextWidget(
+                            textMessage: "message".tr,
                             textColor: MyColors.whiteColor,
-                            textSize: 36)),
+                            textSize: 30)),
                     const SizedBox(
                       height: 20,
                     ),
-                    const TextWidget(
-                        textMessage: "Doctor's Inn",
+                     TextWidget(
+                        textMessage: "doctorinn".tr,
                         textColor: MyColors.whiteColor,
                         textSize: 36),
                    
