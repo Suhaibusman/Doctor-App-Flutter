@@ -103,6 +103,7 @@ class CustomFunction {
   emailController.clear();
   passwordController.clear();
   currentloginedUid = credential.user!.uid;
+  box.write("currentloginedUid", credential.user!.uid);
   final userUid = credential.user!.uid;
   
   // Check if the user exists in the "doctor" collection
@@ -128,13 +129,16 @@ class CustomFunction {
       // User is a regular 
       Map<String, dynamic> userData = userSnapshot.data() as Map<String, dynamic>;
      currentloginedName = userData["username"];
+     box.write("currentloginedName", userData["username"]);
      currentloginedEmail =userData["emailAddress"];
+     box.write("currentloginedEmail", userData["emailAddress"]);
       currentLogineedUserPicture =userData["picture"];
+      box.write("currentLogineedUserPicture", userData["picture"]);
       // Navigate to HomeScreen
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
-          builder: (context) => HomeScreen(userName: currentloginedName, emailAdress: currentloginedEmail, profilePicture: currentLogineedUserPicture),
+          builder: (context) => HomeScreen(userName: box.read("currentloginedName"), emailAdress: box.read("currentloginedEmail"), profilePicture: box.read("currentLogineedUserPicture")),
         ),
       );
     } else {

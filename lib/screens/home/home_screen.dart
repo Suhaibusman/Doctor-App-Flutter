@@ -87,7 +87,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
         TaskSnapshot taskSnapshot = await uploadimage;
         String downloadurl = await taskSnapshot.ref.getDownloadURL();
-        await FirebaseFirestore.instance.collection("doctor").doc(currentloginedUid).set({
+        await FirebaseFirestore.instance.collection("users").doc(currentloginedUid).update({
           "picture": downloadurl
         });
 
