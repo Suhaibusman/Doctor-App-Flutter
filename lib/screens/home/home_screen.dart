@@ -6,17 +6,16 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:provider/provider.dart';
-
 import 'package:smithackathon/constants/colors.dart';
 import 'package:smithackathon/constants/images.dart';
 import 'package:smithackathon/data.dart';
 import 'package:smithackathon/function/custom_function.dart';
-import 'package:smithackathon/provider/theme/theme_provider.dart';
 import 'package:smithackathon/screens/home/widgets/all_doctors.dart';
 import 'package:smithackathon/screens/home/widgets/field_categories.dart';
 import 'package:smithackathon/screens/navbar/bottomnavigation.dart';
+import 'package:smithackathon/theme/theme_controller.dart';
 import 'package:smithackathon/widgets/textwidget.dart';
 
 // ignore: must_be_immutable
@@ -45,7 +44,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final provider = Provider.of<ThemeProvider>(context);
+    ThemeController themeController = Get.put(ThemeController());
+   
     return SafeArea(
       child: Scaffold(
             key: _scaffoldKey,
@@ -125,14 +125,13 @@ class _HomeScreenState extends State<HomeScreen> {
               MainAxisAlignment.spaceBetween,
                         children: [
                           const Text("Dark Theme" , style:  TextStyle( fontSize: 16 , fontWeight: FontWeight.bold),),
-                          Consumer<ThemeProvider>(
-                            builder: (context, provider, child) => Switch(
-                              value: provider.themeMode == ThemeData.dark(),
-                              onChanged: (newValue) {
-                                provider.toogleTheme();
-                              },
-                            ),
-                          ),
+                           Obx(
+              () => Switch(
+                  value: themeController.isSwitched.value,
+                  onChanged: (value) {
+                    themeController.setIsSwitched(value);
+                  }),
+            ),
                                 ],
                       ),
            ),

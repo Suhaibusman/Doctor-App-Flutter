@@ -4,14 +4,16 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:get/get.dart';
+
 
 import 'package:smithackathon/constants/colors.dart';
 import 'package:smithackathon/constants/images.dart';
 import 'package:smithackathon/function/custom_function.dart';
-import 'package:smithackathon/provider/theme/theme_provider.dart';
+
 import 'package:smithackathon/screens/home/widgets/all_doctors.dart';
 import 'package:smithackathon/screens/home/widgets/field_categories.dart';
+import 'package:smithackathon/theme/theme_controller.dart';
 import 'package:smithackathon/widgets/textwidget.dart';
 
 // ignore: must_be_immutable
@@ -40,7 +42,7 @@ class _DoctorScreenState extends State<DoctorScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final provider = Provider.of<ThemeProvider>(context);
+   ThemeController themeController = Get.find<ThemeController>();
     return SafeArea(
       child: Scaffold(
             key: _scaffoldKey,
@@ -77,14 +79,13 @@ class _DoctorScreenState extends State<DoctorScreen> {
               MainAxisAlignment.spaceBetween,
                         children: [
                           const Text("Dark Theme" , style:  TextStyle( fontSize: 16 , fontWeight: FontWeight.bold),),
-                          Consumer<ThemeProvider>(
-                            builder: (context, provider, child) => Switch(
-                              value: provider.themeMode == ThemeData.dark(),
-                              onChanged: (newValue) {
-                                provider.toogleTheme();
-                              },
-                            ),
-                          ),
+                        Obx(
+              () => Switch(
+                  value: themeController.isSwitched.value,
+                  onChanged: (value) {
+                    themeController.setIsSwitched(value);
+                  }),
+            ),
                                 ],
                       ),
            ),
