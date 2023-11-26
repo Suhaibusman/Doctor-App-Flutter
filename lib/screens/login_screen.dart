@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:smithackathon/constants/colors.dart';
 import 'package:smithackathon/constants/images.dart';
+import 'package:smithackathon/controller/login_controller.dart';
 import 'package:smithackathon/function/custom_function.dart';
 import 'package:smithackathon/screens/sign_up_screen.dart';
 import 'package:smithackathon/widgets/buttonwidget.dart';
@@ -18,6 +20,7 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+  LoginController loginController =Get.put(LoginController());
   CustomFunction func = CustomFunction();
 bool isPassword =true;
   @override
@@ -96,17 +99,16 @@ bool isPassword =true;
                   ],
                 ),
                 Image.asset(Myimages.orLine),
-                InkWell(
+                Obx(() => loginController.loading.value ?const CircularProgressIndicator(): InkWell(
                     onTap: () {
-                      func.loginWithEmailAndPassword(
-                          context, emailController, passwordController);
+                     loginController.loginWithEmailAndPassword( emailController, passwordController);
                     },
                     child: CustomButtonWidget(
                         bgColor: MyColors.purpleColor,
                         textMessage: "Login",
                         textColor: MyColors.whiteColor,
                         textSize: 15,
-                        buttonWidth: MediaQuery.of(context).size.width)),
+                        buttonWidth: MediaQuery.of(context).size.width))),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [

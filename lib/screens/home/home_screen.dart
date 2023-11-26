@@ -10,6 +10,7 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:smithackathon/constants/colors.dart';
 import 'package:smithackathon/constants/images.dart';
+import 'package:smithackathon/controller/sign_out_controller.dart';
 import 'package:smithackathon/data.dart';
 import 'package:smithackathon/function/custom_function.dart';
 import 'package:smithackathon/screens/home/widgets/all_doctors.dart';
@@ -45,7 +46,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     ThemeController themeController = Get.put(ThemeController());
-   
+    SignoutController signoutController = Get.put(SignoutController());
     return SafeArea(
       child: Scaffold(
             key: _scaffoldKey,
@@ -143,7 +144,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         children: [
                           const Text("Sign Out" , style:  TextStyle( fontSize: 16 , fontWeight: FontWeight.bold),),
                             IconButton(onPressed: (){
-                              func.signout(context);
+                             signoutController.signout();
                             }, icon: const Icon(Icons.logout))
                         ],
                       ),
