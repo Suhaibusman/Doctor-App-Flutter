@@ -14,7 +14,7 @@ import 'package:smithackathon/theme/theme_controller.dart';
 
 
 void main() async {
-  Get.locale = Locale('en'); 
+  Get.locale = const Locale('en'); 
   WidgetsFlutterBinding.ensureInitialized();
   await GetStorage.init();
   await Firebase.initializeApp(

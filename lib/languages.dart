@@ -9,6 +9,7 @@ class Languages extends Translations{
   @override
   Map<String, Map<String, String>> get keys =>{
     "en_US" :{
+      "AllDoctor":  "All Doctor",
       "all": "All",
       "Cardiology" : "Cardiology",
       "Dentist" : "Dentist",
@@ -30,6 +31,8 @@ class Languages extends Translations{
       "message" :"Lets find your \n Top Doctor"
     },
  "ur_PK" :{
+  "doctor" : "ڈاکٹر",
+  "AllDoctor":  "تمام ڈاکٹر",
    "all": "تمام",
    "Cardiology" : "کارڈیالوجی",
       "Dentist" : "دندان ساز",

@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:smithackathon/function/custom_function.dart';
 
 class AllDoctorScreen extends StatefulWidget {
@@ -28,7 +29,7 @@ class _AllDoctorScreenState extends State<AllDoctorScreen> {
                       Navigator.pop(context);
                     }, icon: const Icon(Icons.arrow_back)),
                     SizedBox(width: MediaQuery.of(context).size.width*0.2,),
-                    const Center(child: Text("All Doctor" ,style: TextStyle(fontSize: 18),))
+                     Center(child: Text("AllDoctor".tr ,style: const TextStyle(fontSize: 18),))
                   ],
                 ),
             FutureBuilder<Widget>(
